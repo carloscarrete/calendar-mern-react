@@ -9,6 +9,7 @@ import 'moment/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { messages } from '../../helpers/messages-calendar-es'
 import { CalendarEvent } from './CalendarEvent';
+import { CalendarModal } from './CalendarModal';
 
 moment.locale('es');
 
@@ -74,6 +75,8 @@ export const CalendarScreen = () => {
         }}
         view= {lastView}
       />
+
+      <CalendarModal />
     </div>
   )
 }
