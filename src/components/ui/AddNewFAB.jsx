@@ -11,7 +11,7 @@ export const AddNewFAB = () => {
    }
 
   return (
-    <button className='btn btn-danger fab' onClick={handleClickNew}>
+    <button className='btn btn-warning fab' onClick={handleClickNew}>
         <i className='fas fa-plus'></i>
     </button>
   )

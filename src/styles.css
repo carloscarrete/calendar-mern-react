@@ -69,3 +69,11 @@ html, body {
     border-radius: 100%;
     font-size: 25px;
 }
+
+.fab-delete{
+    position: fixed;
+    bottom: 20px;
+    left: 50px;
+    border-radius: 100%;
+    font-size: 25px;
+}
