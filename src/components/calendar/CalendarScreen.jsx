@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Navbar } from '../ui/Navbar'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import moment from 'moment';
 import 'moment/locale/es';
@@ -11,6 +11,8 @@ import { messages } from '../../helpers/messages-calendar-es'
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 import { uiOpenModal } from '../../actions/ui';
+import { eventSetActive } from '../../actions/calendar';
+import { AddNewFAB } from '../ui/AddNewFAB';
 
 moment.locale('es');
 
@@ -39,14 +41,14 @@ export const CalendarScreen = () => {
   }
 
   const onSelect = (e) => {
-    console.log(e);
-    console.log('Cerrar modal');
+    dispatch(eventSetActive(e));
+    dispatch(uiOpenModal());
   }
 
-  const onViewChange = (e) =>  {
-       setLastView(e);
-       localStorage.setItem('lastView', e);
-   }
+  const onViewChange = (e) => {
+    setLastView(e);
+    localStorage.setItem('lastView', e);
+  }
 
   const eventStyleGetter = (event, start, end, isSelected) => {
 
@@ -78,8 +80,10 @@ export const CalendarScreen = () => {
         components={{
           event: CalendarEvent
         }}
-        view= {lastView}
+        view={lastView}
       />
+
+      <AddNewFAB />
 
       <CalendarModal />
     </div>
