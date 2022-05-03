@@ -5,5 +5,5 @@ import { uiReducer } from './uiReducer'
 
 export const rootReducer = combineReducers({
     ui: uiReducer,
-    caledar: calendarReducer
+    calendar: calendarReducer
 })

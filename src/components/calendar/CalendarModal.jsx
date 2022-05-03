@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal';
 import moment from 'moment';
 import Swal from 'sweetalert2'
@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import DateTimePicker from 'react-datetime-picker';
 import { uiCloseModal } from '../../actions/ui';
-import { eventAddNew } from '../../actions/calendar';
+import { eventAddNew, eventClear } from '../../actions/calendar';
 
 const now = moment().minutes(0).seconds(0).add(1, 'hours');
 const endTime = now.clone().add(1, 'hours');
@@ -24,27 +24,31 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
+const init = {
+    title: '',
+    notes: '',
+    start: now.toDate(),
+    end: endTime.toDate()
+}
+
 export const CalendarModal = () => {
 
     const {isOpenModal} = useSelector(state =>state.ui);
+    const {activeEvent} = useSelector(state=>state.calendar);
     const dispatch = useDispatch();
 
     const [dateStart, setDateStart] = useState(now.toDate());
     const [dateEnd, setDateEnd] = useState(endTime.toDate());
     const [titleValid, setTitleValid] = useState(true);
 
-    const [formValues, setFormValues] = useState({
-        title: 'Evento',
-        notes: '',
-        start: now.toDate(),
-        end: endTime.toDate()
-    })
+    const [formValues, setFormValues] = useState(init);
 
     const {title, notes, start, end} = formValues;
 
     const closeModal = () => {
-        console.log('Closing...');
         dispatch(uiCloseModal());
+        dispatch(eventClear());
+        setFormValues(init);
     }
 
     const handleStartDateChange = (e) => {
@@ -109,7 +113,17 @@ export const CalendarModal = () => {
               }
           }));
 
+          setFormValues(init);
+
         }
+
+        useEffect(() => {
+            if(activeEvent){
+                setFormValues(activeEvent);
+            }
+        }, [activeEvent, setFormValues]);
+        
+
     return (
         <Modal
             className='modal'
