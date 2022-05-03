@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import DateTimePicker from 'react-datetime-picker';
 import { uiCloseModal } from '../../actions/ui';
+import { eventAddNew } from '../../actions/calendar';
 
 const now = moment().minutes(0).seconds(0).add(1, 'hours');
 const endTime = now.clone().add(1, 'hours');
@@ -98,6 +99,15 @@ export const CalendarModal = () => {
 
           closeModal();
           setTitleValid(true);
+
+          dispatch(eventAddNew({
+              ...formValues,
+              id: new Date().getTime(),
+              user: {
+                  name: 'Carlos',
+                  uid: 123
+              }
+          }));
 
         }
     return (
