@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navbar } from '../ui/Navbar'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +11,7 @@ import { messages } from '../../helpers/messages-calendar-es'
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 import { uiOpenModal } from '../../actions/ui';
-import { eventClear, eventSetActive } from '../../actions/calendar';
+import { eventClear, eventSetActive, eventStartLoading } from '../../actions/calendar';
 import { AddNewFAB } from '../ui/AddNewFAB';
 import { DeleteFAB } from '../ui/DeleteFAB';
 
@@ -22,9 +22,16 @@ const localizer = momentLocalizer(moment)
 export const CalendarScreen = () => {
 
   const dispatch = useDispatch();
+  
+  const {uid} = useSelector(state=>state.auth);
   const {events, activeEvent} = useSelector(state =>state.calendar);
 
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month')
+
+  useEffect(() => {
+    dispatch(eventStartLoading());
+  }, [dispatch])
+  
 
   const onDobleClick = (e) => {
     console.log('Abir modal');
@@ -42,8 +49,10 @@ export const CalendarScreen = () => {
 
   const eventStyleGetter = (event, start, end, isSelected) => {
 
+
+
     const style = {
-      backgroundColor: '#000000',
+      backgroundColor: (uid===event.user._id ) ? '#B800D1' : '#000000',
       borderRadius: '0px',
       display: 'block',
       opacity: 0.8,
