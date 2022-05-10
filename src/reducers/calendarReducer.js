@@ -37,7 +37,7 @@ export const calendarReducer = (state = initialState, action ) =>{
         case types.eventUpdate:
             return{
                 ...state,
-                events: state.events.map(e=>e.id===action.payload.id ? action.payload : e)
+                events: state.events.map(e=>e._id===action.payload._id ? action.payload : e)
             }
         case types.eventDelete:
             return{
