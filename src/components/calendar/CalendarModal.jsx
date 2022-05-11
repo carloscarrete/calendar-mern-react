@@ -83,10 +83,6 @@ export const CalendarModal = () => {
           const momentStart = moment(start);
           const momentEnd = moment(end);
 
-          console.log(momentStart);
-          console.log(momentEnd);
-
-
           if(momentStart.isSameOrAfter(momentEnd)){
             return Swal.fire({
                 title: 'Error!',

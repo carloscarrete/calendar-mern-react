@@ -11,15 +11,13 @@ export const eventStartAddNew = (event) =>{
         try{
             const res = await fetchWithToken('events', event, 'POST');
             const body = await res.json();
-
             if(body.ok){
-                event.id = body.msg.id;
+                event._id = body.msg._id;
                 event.user = {
                     _id: uid,
                     name: name
                 }
                 dispatch(eventAddNew(event));
-                console.log(event);
             }
         }catch(error){
             console.log(error);
@@ -70,7 +68,33 @@ const eventUpdated = (event) =>{
     }
 }
 
-export const eventDelete = () => ({type: types.eventDelete});
+export const eventStartDelete = () =>{
+    return async (dispatch, getState)=>{
+
+            const id = getState().calendar.activeEvent._id;
+               try{
+            const res = await fetchWithToken(`events/${id}`, {}, 'DELETE');
+            const body = await res.json();
+
+             if(body.ok){
+                dispatch(eventDelete());
+                Swal.fire({
+                    icon: 'success',
+                    title: 'El evento se ha confirmado con exito',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }else{
+                Swal.fire('Error', body.msg, 'error');
+            } 
+
+        }catch(error){
+            console.log(error);
+        }    
+    }
+}
+
+const eventDelete = () => ({type: types.eventDelete});
 
 export const eventStartLoading = () =>{
     return async (dispatch) =>{
@@ -81,7 +105,6 @@ export const eventStartLoading = () =>{
             const events = prepareEvent(body.evento);
 
             dispatch(eventLoaded(events));
-
         }catch(error){
             console.log(error);
         }
@@ -92,5 +115,11 @@ const eventLoaded = (events) =>{
     return {
         type: types.eventLoaded,
         payload: events
+    }
+}
+
+export const eventLogout = () => {
+    return {
+        type: types.eventLogout
     }
 }

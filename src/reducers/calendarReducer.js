@@ -1,3 +1,4 @@
+import { type } from '@testing-library/user-event/dist/type'
 import {types} from '../types/types'
 
 const initialState = {
@@ -42,13 +43,18 @@ export const calendarReducer = (state = initialState, action ) =>{
         case types.eventDelete:
             return{
                 ...state,
-                events: state.events.filter(e=>e.id!==state.activeEvent.id),
+                events: state.events.filter(e=>e._id!==state.activeEvent._id),
                 activeEvent: null
             }
         case types.eventLoaded:
             return{
                 ...state,
                 events: [...action.payload]
+            }
+        case type.eventLogout:
+            return {
+                ...initialState,
+
             }
         default:
             return state;

@@ -34,7 +34,6 @@ export const CalendarScreen = () => {
   
 
   const onDobleClick = (e) => {
-    console.log('Abir modal');
     dispatch(uiOpenModal());
   }
 
