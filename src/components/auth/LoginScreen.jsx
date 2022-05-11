@@ -11,15 +11,15 @@ export const LoginScreen = () => {
     const dispatch = useDispatch();
 
     const [formValuesInput, handleLoginInpuntChange] = useForms({
-        lEmail: 'ca@gmail.com',
-        lPassword: '123456'
+        lEmail: '',
+        lPassword: ''
     });
 
     const [formValuesRegister, handleRegisterInpuntChange] = useForms({
-        rName: 'Carlos',
-        rEmail: 'carretero@gmail.com',
-        rPassword: '123456',
-        rPassword2: '123456'
+        rName: '',
+        rEmail: '',
+        rPassword: '',
+        rPassword2: ''
     });
 
 
@@ -50,7 +50,7 @@ export const LoginScreen = () => {
                             <input 
                                 type="text"
                                 className="form-control"
-                                placeholder="Correo"
+                                placeholder="Correo electrónico"
                                 name= "lEmail"
                                 value={lEmail}
                                 onChange={handleLoginInpuntChange}
@@ -93,7 +93,7 @@ export const LoginScreen = () => {
                             <input
                                 type="email"
                                 className="form-control"
-                                placeholder="Correo"
+                                placeholder="Correo electrónico"
                                 name= "rEmail"
                                 value={rEmail}
                                 onChange={handleRegisterInpuntChange}
